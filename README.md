@@ -2,6 +2,8 @@
 # Project Cat_Fedder
 
 
+
+
 ***The target customer of the project:***
  People who raise cats in their homes. 
  
@@ -65,6 +67,12 @@ We will use the Cloud, where we will save the information we want to display on 
 ![CDROM OPEN/CLOSE](https://goughlui.com/wp-content/uploads/2017/12/2017120310001214.jpg)
 
 # Software 
+
+
+Change with Value of connect Rfid in Esp32
+
+    #define SS_PIN 5  //--> SDA / SS is connected to pinout D2
+    #define RST_PIN 22  //--> RST is connected to pinout D1
 
 
 
