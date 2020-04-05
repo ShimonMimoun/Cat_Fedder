@@ -1,20 +1,22 @@
-#include <WiFi.h>
 #include <HTTPClient.h>
-#include<WebServer.h>
 #include <SPI.h>
 #include <MFRC522.h>
+#include <WiFiManager.h>
 
 #define SS_PIN 5  //--> SDA / SS is connected to pinout D2
 #define RST_PIN 22  //--> RST is connected to pinout D1
+
 MFRC522 mfrc522(SS_PIN, RST_PIN);  //--> Create MFRC522 instance.
 
 
+
 //----------------------------------------SSID and Password of your WiFi router-------------------------------------------------------------------------------------------------------------//
-const char* ssid = "benjamin1";
-const char* password = "0544852022";
+
+WiFiManager wm;
+const char* ssid = "cat_feeder";
+const char* password = "0123456789";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
-WiFiServer server(80);  //--> Server on port 80
 
 int readsuccess;
 byte readcard[4];
@@ -29,21 +31,27 @@ void setup() {
 
   delay(500);
 
-  WiFi.begin(ssid, password); //--> Connect to your WiFi router
-  Serial.println("");
-    
   
+//---------------------------WIFI Setting -----------------------------------------------------------
 
-  //----------------------------------------Wait for connection
-  Serial.print("Connecting");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print(".");
-    //----------------------------------------Make the On Board Flashing LED on the process of connecting to the wifi router.
-   }
-  //----------------------------------------If successfully connected to the wifi router, the IP Address that will be visited is displayed in the serial monitor
-  Serial.println("");
-  Serial.print("Successfully connected to : ");
-  Serial.println(ssid);
+ WiFi.mode(WIFI_STA);
+  
+  Serial.begin(115200);
+  delay(1000);
+  Serial.println("\n");
+  
+  if(!wm.autoConnect(ssid, password))
+    Serial.println("Error connexion!");
+  else
+    Serial.println("Connexion Success!");
+
+
+
+    //-----------------------------End Wifi
+
+
+
+
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
@@ -51,8 +59,22 @@ void setup() {
   Serial.println("");
 }
 
-//-----------------------------------------------------------------------------------------------LOOP---------------------------------------------------------------------------------------//
 void loop() {
+
+//----------------Wifi Reset------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  //Dans cet exemple j'utilise la broche tactile D4 pour faire un reset des paramètres de connexion.
+  if(touchRead(T0) < 50)
+  {
+   
+    Serial.println("Suppression des reglages et redemarrage...");
+    wm.resetSettings();
+    ESP.restart();
+  }
+
+
+
+//-----------------End Wifi Reset------------------------------------------------------------------------------------------------------------------------------------------
 
   readsuccess = getid();
  
@@ -61,12 +83,13 @@ void loop() {
  
     String UIDresultSend, postData;
     UIDresultSend = StrUID;
-   
-    //Post Data
+    
     postData = "tag=" + UIDresultSend;
     Serial.println(UIDresultSend+"\n");
   
   //-----------------------------------------------------------Insert log --------------------------------------------------
+ 
+ 
     http.begin("https://meiitarmoodin.com/cat/add.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
    
@@ -76,9 +99,10 @@ void loop() {
     Serial.println(payload);    //Print request response payload
     
     http.end();  //Close connection
+
+
 //--------------------------------------------------------NAME OF CAT ----------------------------------
-
-
+    
     http.begin("https://meiitarmoodin.com/cat/namecat.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
     http.POST(postData);   //Send the request
@@ -86,8 +110,10 @@ void loop() {
   
     Serial.println(" ");    //Print request response payload
 
-//---------------------------------VERIF INFORMATION-------------------------------------------------
 
+
+//---------------------------------VERIF INFORMATION-------------------------------------------------
+  
     http.begin("https://meiitarmoodin.com/cat/verif.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
     http.POST(postData);   //Send the request
@@ -101,14 +127,15 @@ void loop() {
     }else{
   Serial.print("Le chat n'est pas autoriser a manger");
  }
-//---------------------------------Name of cat-------------------------------------------------
 
-    delay(1000);
+
+
+    delay(500);
  
 }
 }
 
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+
 
 //----------------------------------------Procedure for reading and obtaining a UID from a card or keychain---------------------------------------------------------------------------------//
 int getid() {  
@@ -120,7 +147,7 @@ int getid() {
   }
  
   
-  Serial.print("\n THE UID OF THE SCANNED CARD IS : ");
+  Serial.print("\n THE UID CARD IS : ");
   
   for(int i=0;i<6;i++){
     readcard[i]=mfrc522.uid.uidByte[i]; //storing the UID of the tag in readcard
@@ -130,7 +157,7 @@ int getid() {
   mfrc522.PICC_HaltA();
   return 1;
 }
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+
 
 //----------------------------------------Procedure to change the result of reading an array UID into a string------------------------------------------------------------------------------//
 void array_to_string(byte array[], unsigned int len, char buffer[]) {
@@ -143,4 +170,3 @@ void array_to_string(byte array[], unsigned int len, char buffer[]) {
     }
     buffer[len*2] = '\0';
 }
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//  
