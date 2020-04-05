@@ -2,8 +2,6 @@
 # Project Cat_Fedder
 
 
-
-
 ***The target customer of the project:***
  People who raise cats in their homes. 
  
@@ -52,6 +50,9 @@ We will use the Cloud, where we will save the information we want to display on 
 
 ![RFID](https://cdn.instructables.com/FBJ/E13M/JF2SVSY8/FBJE13MJF2SVSY8.LARGE.jpg?auto=webp&frame=1&fit=bounds)
 
+
+
+
 (4) Diode LED 
 
 ![LED Diode](https://5.imimg.com/data5/DN/SE/MY-3299289/5mm-led-light-emitting-diode-500x500.jpg)
@@ -68,13 +69,17 @@ We will use the Cloud, where we will save the information we want to display on 
 
 # Software 
 
-
-Change with Value of connect Rfid in Esp32
+Change with Value of ***connect Rfid in Esp32:***
 
     #define SS_PIN 5  //--> SDA / SS is connected to pinout D2
     #define RST_PIN 22  //--> RST is connected to pinout D1
 
 
+Enter a ssid and password of ***Access Point*** to configure a Wifi Connexion 
+
+    WiFiManager wm;
+    const  char* ssid =  "Enter Ssid";
+    const  char* password =  "Enter Password";
 
 # Database
 
@@ -87,3 +92,4 @@ Table:
 # Author
 
 [Shimon Mimoun](https://www.linkedin.com/in/shimonmimoun/) 
+
