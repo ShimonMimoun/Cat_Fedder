@@ -64,7 +64,7 @@ void loop() {
    
     //Post Data
     postData = "tag=" + UIDresultSend;
-    Serial.println(postData+"\n");
+    Serial.println(UIDresultSend+"\n");
   
   //-----------------------------------------------------------Insert log --------------------------------------------------
     http.begin("https://meiitarmoodin.com/cat/add.php");  //Specify request destination
@@ -76,7 +76,7 @@ void loop() {
     Serial.println(payload);    //Print request response payload
     
     http.end();  //Close connection
-//--------------------------------------------------------Verif information ----------------------------------
+//--------------------------------------------------------NAME OF CAT ----------------------------------
 
 
     http.begin("https://meiitarmoodin.com/cat/namecat.php");  //Specify request destination
@@ -85,28 +85,20 @@ void loop() {
     payload = http.getString();    //Get the response payload
   
     Serial.println(" ");    //Print request response payload
-    Serial.println(payload);    //Print request response payload
 
-//---------------------------------Name of cat-------------------------------------------------
+//---------------------------------VERIF INFORMATION-------------------------------------------------
 
     http.begin("https://meiitarmoodin.com/cat/verif.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
     http.POST(postData);   //Send the request
     payload = http.getString();    //Get the response payload
   
-    Serial.println(" ");    //Print request response payload
     http.end();  //Close connection
-
-    Serial.println(" ");    //Print request response payload
-    Serial.println(payload);    //Print request response payload
-    Serial.println(" ");    //Print request response payload
-
-if(payload=="1"){
-
-
-Serial.print("Le chat est autoriser a manger");
-}
-else{
+    int numberOne = 1;
+    if (payload.toInt() == numberOne) {
+      Serial.print("Le chat est autoriser a manger");
+    
+    }else{
   Serial.print("Le chat n'est pas autoriser a manger");
  }
 //---------------------------------Name of cat-------------------------------------------------
@@ -128,7 +120,7 @@ int getid() {
   }
  
   
-  Serial.print("THE UID OF THE SCANNED CARD IS : ");
+  Serial.print("\n THE UID OF THE SCANNED CARD IS : ");
   
   for(int i=0;i<6;i++){
     readcard[i]=mfrc522.uid.uidByte[i]; //storing the UID of the tag in readcard
