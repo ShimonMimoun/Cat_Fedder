@@ -2,7 +2,9 @@
 #include <SPI.h>
 #include <MFRC522.h>
 #include <WiFiManager.h>
+#include "HX711.h"
 
+//------------------------RFID-------------------------------------------------------------------------
 #define SS_PIN 5  //--> SDA / SS is connected to pinout D2
 #define RST_PIN 22  //--> RST is connected to pinout D1
 
@@ -10,12 +12,18 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  //--> Create MFRC522 instance.
 
 
 
+// -----------------------------------HX711 circuit wiring---------------------------------------------------
+const int LOADCELL_DOUT_PIN = 25;
+const int LOADCELL_SCK_PIN = 26;
+HX711 scale;
+
+
 //----------------------------------------SSID and Password of your WiFi router-------------------------------------------------------------------------------------------------------------//
 
-WiFiManager wm;
 const char* ssid = "cat_feeder";
 const char* password = "0123456789";
-//------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
+WiFiManager wm;
+//-----------------------------------------------Global Parameter----------------------------------------------------------------------------------------------------------------------------//
 
 
 int readsuccess;
@@ -28,33 +36,33 @@ void setup() {
   Serial.begin(115200); //--> Initialize serial communications with the PC
   SPI.begin();      //--> Init SPI bus
   mfrc522.PCD_Init(); //--> Init MFRC522 card
-
   delay(500);
 
   
 //---------------------------WIFI Setting -----------------------------------------------------------
 
  WiFi.mode(WIFI_STA);
-  
-  Serial.begin(115200);
   delay(1000);
-  Serial.println("\n");
-  
+  Serial.println("\n");  
   if(!wm.autoConnect(ssid, password))
     Serial.println("Error connexion!");
   else
     Serial.println("Connexion Success!");
 
-
-
-    //-----------------------------End Wifi
-
-
-
-
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 
+
+//--------------------------------------Scale Hx711------------------------------------------------------
+
+  Serial.println("Initializing the scale");
+  scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
+  scale.set_scale(2280.f);                      // this value is obtained by calibrating the scale with known weights; see the README for details
+  scale.tare();				        // reset the scale to 0
+
+
+//-------------------------------------continue -------------------------------------------------------------
+  
   Serial.println("Please tag a card or keychain to see the UID !");
   Serial.println("");
 }
@@ -63,16 +71,13 @@ void loop() {
 
 //----------------Wifi Reset------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  //Dans cet exemple j'utilise la broche tactile D4 pour faire un reset des paramètres de connexion.
-  if(touchRead(T0) < 50)
-  {
-   
-    Serial.println("Suppression des reglages et redemarrage...");
-    wm.resetSettings();
-    ESP.restart();
-  }
-
-
+  // //Dans cet exemple j'utilise la broche tactile D4 pour faire un reset des paramètres de connexion.
+  // if(touchRead(T0) < 50)
+  // {
+  //   Serial.println("delete setting and restart...");
+  //   wm.resetSettings();
+  //   ESP.restart();
+  // }
 
 //-----------------End Wifi Reset------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -81,15 +86,28 @@ void loop() {
   if(readsuccess) {  
     HTTPClient http;    //Declare  HTTPClient
  
-    String UIDresultSend, postData;
+    String UIDresultSend, postData,weight;
     UIDresultSend = StrUID;
     
     postData = "tag=" + UIDresultSend;
     Serial.println(UIDresultSend+"\n");
+//----------------------------------------------------HX7111 Loop----------------------------------------------------------------
+
+  // int ww = (int)(scale.get_units(15) + 0.5);
+  // weight="weight="+ww;
+
+  // Serial.println(weight);
+  // Serial.print(" lbs: ");
+
+Serial.println((0.454 * scale.get_units(15), 10));
+Serial.print(" kg");
+
+  delay(50);
+  scale.power_up();
   
   //-----------------------------------------------------------Insert log --------------------------------------------------
  
- 
+ postData=postData+"&weight="+(0.454 * scale.get_units(15), 10);
     http.begin("https://meiitarmoodin.com/cat/add.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
    
