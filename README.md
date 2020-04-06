@@ -83,8 +83,8 @@ Enter a ssid and password of ***Access Point*** to configure a Wifi Connexion
     
 Hx711 connect use: 
 
-    12 for SCK
-    13 for DOUT
+    26 for SCK
+    25 for DOUT
     Ground connects to GND
     VCC connects to 5v or 3v
     
