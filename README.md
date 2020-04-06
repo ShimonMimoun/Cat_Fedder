@@ -80,6 +80,15 @@ Enter a ssid and password of ***Access Point*** to configure a Wifi Connexion
     WiFiManager wm;
     const  char* ssid =  "Enter Ssid";
     const  char* password =  "Enter Password";
+    
+Hx711 connect use: 
+
+    12 for SCK
+    13 for DOUT
+    Ground connects to GND
+    VCC connects to 5v or 3v
+    
+
 
 # Database
 
