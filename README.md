@@ -98,7 +98,7 @@ Table:
 
 
 
-# Author
+<!-- # Author
 
-[Shimon Mimoun](https://www.linkedin.com/in/shimonmimoun/) 
+[Shimon Mimoun](https://www.linkedin.com/in/shimonmimoun/)  -->
 
