@@ -40,7 +40,7 @@ We will use the Cloud, where we will save the information we want to display on 
 
 # Software 
 
-![View project](https://github.com/naor94/CATFEEDER1)
+[View project](https://github.com/naor94/CATFEEDER1)
 
 # Hardware
 
