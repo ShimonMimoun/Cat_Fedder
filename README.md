@@ -38,7 +38,9 @@ The food weighing event: When the cat gets permission and the bowl opening is op
 
 We will use the Cloud, where we will save the information we want to display on the WEB, run the algorithm and perform the deep learning. In the Cloud we will save the data of the Database and with this we will make the connection between the hardware and the software
 
+# Software 
 
+![View project](https://github.com/naor94/CATFEEDER1)
 
 # Hardware
 
