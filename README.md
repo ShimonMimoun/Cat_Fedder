@@ -73,7 +73,7 @@ We will use the Cloud, where we will save the information we want to display on 
 
 Change with Value of ***connect Rfid in Esp32:***
 
-    #define SS_PIN 5  //--> SDA / SS is connected to pinout D2
+    #define SS_PIN 21  //--> SDA / SS is connected to pinout D2
     #define RST_PIN 22  //--> RST is connected to pinout D1
 
 
