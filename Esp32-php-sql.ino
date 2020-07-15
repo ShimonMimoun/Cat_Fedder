@@ -31,7 +31,7 @@ int readsuccess;
 byte readcard[4];
 char str[32] = "";
 String StrUID;
-const int ledPin = 5;
+const int ledPin = 17;
 
 //-----------------------------------------------------------------------------------------------SETUP--------------------------------------------------------------------------------------//
 void setup() {
@@ -125,7 +125,7 @@ void loop() {
   
     Serial.println("Hey,");    //Print request response payload
     Serial.print(payload);
-
+    Serial.println(" "); 
 
 //---------------------------------VERIF INFORMATION-------------------------------------------------
   
