@@ -123,8 +123,8 @@ void loop() {
     http.POST(postData);   //Send the request
     payload = http.getString();    //Get the response payload
   
-    Serial.println(" ");    //Print request response payload
-
+    Serial.println("Hey,");    //Print request response payload
+    Serial.print(payload);
 
 
 //---------------------------------VERIF INFORMATION-------------------------------------------------
