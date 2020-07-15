@@ -5,7 +5,7 @@
 #include "HX711.h"
 
 //------------------------RFID-------------------------------------------------------------------------
-#define SS_PIN 5  //--> SDA / SS is connected to pinout D2
+#define SS_PIN 21  //--> SDA / SS is connected to pinout D2
 #define RST_PIN 22  //--> RST is connected to pinout D1
 
 MFRC522 mfrc522(SS_PIN, RST_PIN);  //--> Create MFRC522 instance.
@@ -13,6 +13,7 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  //--> Create MFRC522 instance.
 
 
 // -----------------------------------HX711 circuit wiring---------------------------------------------------
+
 const int LOADCELL_DOUT_PIN = 25;
 const int LOADCELL_SCK_PIN = 26;
 HX711 scale;
@@ -30,6 +31,7 @@ int readsuccess;
 byte readcard[4];
 char str[32] = "";
 String StrUID;
+const int ledPin = 17
 
 //-----------------------------------------------------------------------------------------------SETUP--------------------------------------------------------------------------------------//
 void setup() {
@@ -57,12 +59,13 @@ void setup() {
 
   Serial.println("Initializing the scale");
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
-  scale.set_scale(2280.f);                      // this value is obtained by calibrating the scale with known weights; see the README for details
-  scale.tare();				        // reset the scale to 0
+ 
 
+///---------------------------------led----------------------------------------------------------------------
+pinMode (ledPin, OUTPUT);
 
 //-------------------------------------continue -------------------------------------------------------------
-  
+
   Serial.println("Please tag a card or keychain to see the UID !");
   Serial.println("");
 }
@@ -92,30 +95,24 @@ void loop() {
     postData = "tag=" + UIDresultSend;
     Serial.println(UIDresultSend+"\n");
 //----------------------------------------------------HX7111 Loop----------------------------------------------------------------
+   scale.set_scale(2280.f);// this value is obtained by calibrating the scale with known weights; see the README for details
+   scale.tare();                // reset the scale to 0
+   scale.power_down(); // put the ADC in sleep mode
+   delay(40);
+   scale.power_up();
 
-  // int ww = (int)(scale.get_units(15) + 0.5);
-  // weight="weight="+ww;
-
-  // Serial.println(weight);
-  // Serial.print(" lbs: ");
-
-Serial.println((0.454 * scale.get_units(15), 10));
-Serial.print(" kg");
-
-  delay(50);
-  scale.power_up();
   
   //-----------------------------------------------------------Insert log --------------------------------------------------
  
- postData=postData+"&weight="+(0.454 * scale.get_units(15), 10);
+    postData=postData+"&weight="+(0.454 * scale.get_units(15), 10);
     http.begin("https://meiitarmoodin.com/cat/add.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
    
-    //int httpCode = http.POST(postData);   //Send the request
     http.POST(postData);   //Send the request
     String payload = http.getString();    //Get the response payload
     Serial.println(payload);    //Print request response payload
-    
+//    
+  Serial.println("Add to log Sucess");
     http.end();  //Close connection
 
 
@@ -140,10 +137,15 @@ Serial.print(" kg");
     http.end();  //Close connection
     int numberOne = 1;
     if (payload.toInt() == numberOne) {
-      Serial.print("Le chat est autoriser a manger");
+      Serial.print("The cat is allowed to eat");
+      
+       digitalWrite (ledPin, HIGH);  // turn on the LED
+       delay(500); // wait for half a second or 500 milliseconds
+       digitalWrite (ledPin, LOW); // turn off the LED
     
     }else{
-  Serial.print("Le chat n'est pas autoriser a manger");
+      
+  Serial.print("The cat is not allowed to eat");
  }
 
 
