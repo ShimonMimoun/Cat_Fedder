@@ -31,7 +31,7 @@ int readsuccess;
 byte readcard[4];
 char str[32] = "";
 String StrUID;
-const int ledPin = 17
+const int ledPin = 5;
 
 //-----------------------------------------------------------------------------------------------SETUP--------------------------------------------------------------------------------------//
 void setup() {
@@ -142,7 +142,8 @@ void loop() {
        digitalWrite (ledPin, HIGH);  // turn on the LED
        delay(500); // wait for half a second or 500 milliseconds
        digitalWrite (ledPin, LOW); // turn off the LED
-    
+       delay(500);  // wait for half a second or 500 milliseconds
+
     }else{
       
   Serial.print("The cat is not allowed to eat");
