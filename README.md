@@ -2,8 +2,10 @@
 # Project Cat_Fedder
 
 
-![Poster](https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/PosterCatFeeder.jpg)
 
+<p align="center">
+  <img width="460" height="300" src="https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/PosterCatFeeder.jpg">
+</p>
 
 
 ***The target customer of the project:***
