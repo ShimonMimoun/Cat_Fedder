@@ -2,6 +2,10 @@
 # Project Cat_Fedder
 
 
+![Poster](https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/PosterCatFeeder.jpg)
+
+
+
 ***The target customer of the project:***
  People who raise cats in their homes. 
  
