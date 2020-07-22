@@ -4,7 +4,7 @@
 
 
 <p align="center">
-  <img width="460" height="300" src="https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/PosterCatFeeder.jpg">
+  <img src="https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/PosterCatFeeder.jpg">
 </p>
 
 
