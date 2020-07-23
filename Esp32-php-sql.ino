@@ -194,7 +194,7 @@ int getid() {
   }
  
   
-  Serial.print("\n THE UID CARD IS : ");
+  Serial.print("\nTHE UID CARD IS : ");
   
   for(int i=0;i<6;i++){
     readcard[i]=mfrc522.uid.uidByte[i]; //storing the UID of the tag in readcard
