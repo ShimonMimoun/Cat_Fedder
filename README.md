@@ -101,10 +101,23 @@ Hx711 connect use:
 # Database
 
 Use Mysql and php to control the esp32 is to give the necessary authorization.
+
 Table:
 
+- auth
+- cat
+- log
+- users
 
 
+# Documentation 
+
+
+
+[Vision Document](https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/Vision.pdf)
+[Software Design Document](https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/SDD.pdf)
+[Software Requirements Document](https://github.com/ShimonMimoun/Cat_Fedder/blob/master/Requirements%20Specification/SRS.pdf)
+[Presentation Project](https://github.com/ShimonMimoun/Cat_Fedder/raw/master/Requirements%20Specification/%D7%9E%D7%A6%D7%92%D7%AA%20%D7%A4%D7%A8%D7%95%D7%99%D7%99%D7%A7%D7%98%20%D7%92%D7%9E%D7%A8.pptx)
 
 <!-- # Author
 
