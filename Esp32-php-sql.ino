@@ -1,4 +1,5 @@
-#include <HTTPClient.h>
+['
+|#include <HTTPClient.h>
 #include <SPI.h>
 #include <MFRC522.h>
 #include <WiFiManager.h>
@@ -31,8 +32,8 @@ int readsuccess;
 byte readcard[4];
 char str[32] = "";
 String StrUID;
-const int ledPin = 17;
-
+const int ledPinGreen = 17;
+const int ledPinRed = 16;
 //-----------------------------------------------------------------------------------------------SETUP--------------------------------------------------------------------------------------//
 void setup() {
   Serial.begin(115200); //--> Initialize serial communications with the PC
@@ -62,7 +63,8 @@ void setup() {
  
 
 ///---------------------------------led----------------------------------------------------------------------
-pinMode (ledPin, OUTPUT);
+pinMode (ledPinGreen, OUTPUT);
+pinMode (ledPinRed, OUTPUT);
 
 //-------------------------------------continue -------------------------------------------------------------
 
@@ -123,30 +125,54 @@ void loop() {
     http.POST(postData);   //Send the request
     payload = http.getString();    //Get the response payload
   
-    Serial.println("Hey,");    //Print request response payload
-    Serial.print(payload);
-    Serial.println(" "); 
+   
+  int booll=0;
+
+  if(payload=="\"{\\\"no sucess\\\": \\\"false\\\"}\""){
+    booll=1;
+    Serial.println("No name");
+  }else{
+        Serial.print("Hey, ");    //Print request response payload
+        Serial.print(payload);
+  }
+
 
 //---------------------------------VERIF INFORMATION-------------------------------------------------
-  
+
+
+  if (booll==0){
     http.begin("https://meiitarmoodin.com/cat/verif.php");  //Specify request destination
     http.addHeader("Content-Type", "application/x-www-form-urlencoded"); //Specify content-type header
     http.POST(postData);   //Send the request
     payload = http.getString();    //Get the response payload
-  
     http.end();  //Close connection
+  }
+   
+  
     int numberOne = 1;
-    if (payload.toInt() == numberOne) {
-      Serial.print("The cat is allowed to eat");
+   
+    if (payload.toInt() == numberOne && (booll==0) ) {
+      Serial.print(", is allowed to eat");
       
-       digitalWrite (ledPin, HIGH);  // turn on the LED
-       delay(500); // wait for half a second or 500 milliseconds
-       digitalWrite (ledPin, LOW); // turn off the LED
+       digitalWrite (ledPinGreen, HIGH);  // turn on the LED
+       delay(3500); // wait for half a second or 500 milliseconds
+       digitalWrite (ledPinGreen, LOW); // turn off the LED
        delay(500);  // wait for half a second or 500 milliseconds
 
-    }else{
-      
-  Serial.print("The cat is not allowed to eat");
+    }else if (booll==1){
+        Serial.print(", is not a part of our cat");
+      digitalWrite (ledPinRed, HIGH);  // turn on the LED
+       delay(3500); // wait for half a second or 500 milliseconds
+       digitalWrite (ledPinRed, LOW); // turn off the LED
+       delay(500);  // wait for half a second or 500 milliseconds
+
+ }else {
+  Serial.print(", is not allowed to eat");
+      digitalWrite (ledPinRed, HIGH);  // turn on the LED
+       delay(3500); // wait for half a second or 500 milliseconds
+       digitalWrite (ledPinRed, LOW); // turn off the LED
+       delay(500);  // wait for half a second or 500 milliseconds
+  
  }
 
 
