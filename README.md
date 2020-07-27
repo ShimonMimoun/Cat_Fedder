@@ -46,7 +46,7 @@ We will use the Cloud, where we will save the information we want to display on 
 
 # Software 
 
-[View project](https://github.com/naor94/CATFEEDER1)
+    $cd Software
 
 # Hardware
 
@@ -75,7 +75,7 @@ We will use the Cloud, where we will save the information we want to display on 
 
 ![CDROM OPEN/CLOSE](https://goughlui.com/wp-content/uploads/2017/12/2017120310001214.jpg)
 
-# Software 
+# Code (C++) use Arduino
 
 Change with Value of ***connect Rfid in Esp32:***
 
