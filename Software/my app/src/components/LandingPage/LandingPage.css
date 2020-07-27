@@ -1,0 +1,14 @@
+.pic{
+    height: 200px;
+    width: 400px;
+    position: relative;
+    display: inline-block;
+    min-height: 100%;
+  
+
+    
+}
+
+.contact{
+  padding-bottom: 3cm;
+}

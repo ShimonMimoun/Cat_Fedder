@@ -1,0 +1,27 @@
+.left{
+    padding-left: 250px;
+    padding-top: 70px;
+}
+
+
+.underline{
+    border-bottom: 1px dotted #000000;
+    width: 100%;
+    display: block;
+    color: #000000; font-family: 'Trocchi', serif; font-size: 38px; font-weight: normal; line-height: 48px; margin: 0; 
+    padding-top: 1cm;
+    padding-left: 1cm;
+}
+
+
+.center{
+    position: absolute;
+    left: 20cm;
+    top: 10cm;
+}
+
+.rec{
+    position: absolute;
+    left: 19cm;
+    top: 8cm;
+}

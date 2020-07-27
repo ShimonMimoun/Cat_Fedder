@@ -1,0 +1,15 @@
+body, html {
+    height: 100%;
+  }
+  .bg {
+    background-image: url("logo-small.jpg");
+    height: 5000px;
+    width: 30%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    
+ 
+    
+  }

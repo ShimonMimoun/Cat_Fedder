@@ -1,0 +1,27 @@
+.register{
+    padding-left: 1200px;
+    padding-top: 100px;
+   
+}
+.link{
+    text-decoration: underline;
+    text-align: center;
+    color: gray;
+}
+
+
+.c{
+position: absolute;
+left: 850px;
+  top: 150px;
+}
+
+
+.cen{
+  text-align: center;
+}
+
+.tex{
+  color: #000000; font-family: 'Trocchi', serif; font-size: 30px; font-weight: normal; line-height: 48px; margin: 0; 
+
+}
