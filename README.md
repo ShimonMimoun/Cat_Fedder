@@ -23,6 +23,7 @@
 
 
 # Explain
+
 We will install a sensor on the cat collar, when the cat approaches the bowl, the bowl sensor will detect him and if the sensors are matched the system will open the bowl opening. While the cat is eating it will stand on the weight and it will weigh him. When the bowl open, the system will send the data to the database and update the application.
 Behind the scenes we will run an algorithm that will learn about the cat's behavior (amount of eating, eating times and weight) and alert the user when something unusual happens.
 
@@ -41,8 +42,6 @@ There are several possible events for the product
 	 (2) If the cat has not received permission: The system will not weigh the cat and a red light would light. 
 
 The food weighing event: When the cat gets permission and the bowl opening is opened, we will weight the food in the bowl. As the cat leaves the area and the opening closed, we will weigh the food in the bowl, and so we can know the amount of food the cat ate.
-
-We will use the Cloud, where we will save the information we want to display on the WEB, run the algorithm and perform the deep learning. In the Cloud we will save the data of the Database and with this we will make the connection between the hardware and the software
 
 # Web-Site Software
 
